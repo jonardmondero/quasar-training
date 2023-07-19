@@ -5,3 +5,9 @@ export const cart = reactive({
 export const cartItems = reactive({
   cartItems: [],
 });
+
+export const userForm = reactive([]);
+
+export const toggleDelete = reactive({
+  toggle: false,
+});

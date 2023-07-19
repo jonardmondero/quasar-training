@@ -17,19 +17,18 @@
             size="3em"
           />
         </q-img>
-        <q-card-section class="m-ml-md" vertical>
-          <q-card-title t class="text-weight-bolder text-h3">{{
-            products.title
-          }}</q-card-title>
-          <q-card-section class="p-mt-lg" align="left" vertical>
-            <q-card-main class="text-h5">{{
-              products.description
-            }}</q-card-main>
-            <q-card-separator />
-            <q-card-section style="margin-top: 80px">
-              <q-card-main class="text-h3">{{ price }}</q-card-main>
-            </q-card-section>
+        <q-card-section class="m-ml-md text-weight-bolder text-h3" vertical>
+          {{ products.title }}
+          <q-card-section class="p-mt-lg text-h5" align="left" vertical>
+            {{ products.description }}
           </q-card-section>
+          <q-card-section class="text-h3" style="margin-top: 80px">
+            {{ price }}
+          </q-card-section>
+          <q-card-section>
+            <q-rating v-model="rate" readonly />
+          </q-card-section>
+
           <!-- Button Add to Cart -->
 
           <!-- Quantity add Button -->
@@ -79,6 +78,7 @@ import { useRouter } from "vue-router";
 const products = ref([]);
 const router = useRouter();
 const price = ref();
+const rate = ref(0);
 let quantity = ref(0);
 
 // add a function for addQuantity
@@ -92,7 +92,14 @@ function removeQuantity() {
 }
 
 function addToCart() {
-  cart.cart = quantity;
+  cart.cart = quantity.value;
+  cart.cartItems = [
+    products.value.id,
+    products.value.image,
+    products.value.title,
+    quantity.value,
+  ];
+  console.log(cart.cartItems);
 }
 async function getProduct() {
   const response = await axios.get(
@@ -101,6 +108,7 @@ async function getProduct() {
   // console.log(router.currentRoute.value.params.id);
   products.value = response.data;
   price.value = "Price: $" + response.data.price;
+  rate.value = response.data.rating.rate;
 }
 
 getProduct();

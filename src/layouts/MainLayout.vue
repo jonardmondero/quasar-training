@@ -18,7 +18,7 @@
             {{ cart.cart }}
           </q-badge>
         </q-btn>
-        <div>Quasar v{{ $q.version }}</div>
+        <div>Jonard Mondero</div>
       </q-toolbar>
     </q-header>
 
@@ -65,6 +65,7 @@
       <router-view />
     </q-page-container>
     <!-- <ajaxBar /> -->
+    <CartItems />
   </q-layout>
 </template>
 
@@ -72,9 +73,8 @@
 import { defineComponent, ref } from "vue";
 // import EssentialLink from "components/EssentialLink.vue";
 import { useQuasar } from "quasar";
-import { inject } from "vue";
 import { cart } from "../reactive.js";
-const cartCount = inject("contextValue");
+import CartItems from "../pages/CartItems.vue";
 const $q = useQuasar();
 const leftDrawerOpen = ref(false);
 
